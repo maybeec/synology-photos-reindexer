@@ -32,6 +32,14 @@ def reindex(sid):
 
     return True
 
+def reindexTeam(sid):
+    res_reindex = call_api('SYNO.FotoTeam.Index', 'reindex', '1', _sid=sid)
+    res_reindex_json = res_reindex.json()
+    if('success' not in res_reindex_json):
+        exit('Team Reindex failed')
+
+    return True
+
 def logout():
     res_logout = call_api('SYNO.API.Auth', 'logout', '3')
     res_logout_json = res_logout.json()
@@ -49,6 +57,7 @@ if(__name__ == '__main__'):
         exit('Synology password (SYNO_PASSWORD) not in environment')
 
     login_sid = login()
-    res_reindex = reindex(login_sid)
+    reindex(login_sid)
+    reindex(login_sid)
     logout()
     print('Reindexed successfully')
